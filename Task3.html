@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e8f0fe;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .converter {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .converter h1 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .converter input,
+    .converter select,
+    .converter button {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #007BFF;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="converter">
+    <h1>Temperature Converter</h1>
+    <input type="number" id="tempInput" placeholder="Enter temperature" />
+    <select id="unitInput">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+      <option value="kelvin">Kelvin</option>
+    </select>
+    <button onclick="convertTemperature()">Convert</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function convertTemperature() {
+      const inputTemp = parseFloat(document.getElementById('tempInput').value);
+      const unit = document.getElementById('unitInput').value;
+      const resultDiv = document.getElementById('result');
+
+      if (isNaN(inputTemp)) {
+        resultDiv.textContent = 'Please enter a valid number.';
+        return;
+      }
+
+      let c, f, k;
+      if (unit === 'celsius') {
+        c = inputTemp;
+        f = (c * 9/5) + 32;
+        k = c + 273.15;
+      } else if (unit === 'fahrenheit') {
+        f = inputTemp;
+        c = (f - 32) * 5/9;
+        k = c + 273.15;
+      } else if (unit === 'kelvin') {
+        k = inputTemp;
+        c = k - 273.15;
+        f = (c * 9/5) + 32;
+      }
+
+      resultDiv.innerHTML = `
+        Celsius: ${c.toFixed(2)} °C<br>
+        Fahrenheit: ${f.toFixed(2)} °F<br>
+        Kelvin: ${k.toFixed(2)} K
+      `;
+    }
+  </script>
+</body>
+</html>
